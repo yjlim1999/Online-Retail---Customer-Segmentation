@@ -42,8 +42,116 @@ We can observe that for negative quantity numbers, the invoice number contains t
 
         Number of orders cancelled: 18390/797885 (2.30%) 
         
-As you can see from the table above, we can see that the cancellations are made by the same person (Customer ID: C489449). I decide to see whether there are orders bought before from this customer with exactly the same attributes with exception of invoice number and invoiceDate. However, I realised that the previous orders for this particular customer may not be present in the dataset as the cancellation is made on 2009-12-01 which means that the order is most likely to be bought previously on a date earlier but the dataset only starts at 2009-12-01. The hypothesis proves to be the correct as the previous order is not found.
+As you can see from the table above, we can see that the cancellations are made by the same person (Customer ID: C489449). I decide to see whether there are orders bought before from this customer with matching order details with exception of invoice number and invoiceDate. However, I realised that the previous orders for this particular customer may not be present in the dataset as the cancellation is made on 2009-12-01 which means that the order is most likely to be bought previously on a date earlier but the dataset only starts at 2009-12-01. The hypothesis proves to be the correct as the previous order is not found.
 
+Despite this, we can still verify the cancellations that are made later than 2009-12-01. I looked at the 200th-240th wrong matching entries. The stock codes for the wrong matching are quite unexpected. Most of the StockCodes are expected(contains all numbers) but some of the stockCodes contains alphabets e.g. A, B, C, D, E, G, L, J, P, S, W which are located at the end of the StockCode. Upon closer inspection at the description, the alphabets are related to the product. For example, if you look at 233th-240th mismatch invoices, they all contain alphabets at the end of their stockCode and the alphabets in this case refers to the letters on the "BLING KEY RING".
+
+    ----------Does not match----------
+    StockCode                         90214G
+    Description    LETTER "G" BLING KEY RING
+    Quantity                              -6
+    InvoiceDate          2009-12-07 14:37:00
+    Price                               1.25
+    Customer ID                        14695
+    Name: 15651, dtype: object
+    ----------Does not match----------
+    StockCode                         90214P
+    Description    LETTER "P" BLING KEY RING
+    Quantity                              -6
+    InvoiceDate          2009-12-07 14:37:00
+    Price                               1.25
+    Customer ID                        14695
+    Name: 15652, dtype: object
+    ----------Does not match----------
+    StockCode                         90214E
+    Description    LETTER "E" BLING KEY RING
+    Quantity                              -6
+    InvoiceDate          2009-12-07 14:37:00
+    Price                               1.25
+    Customer ID                        14695
+    Name: 15653, dtype: object
+    ----------Does not match----------
+    StockCode                         90214J
+    Description    LETTER "J" BLING KEY RING
+    Quantity                              -6
+    InvoiceDate          2009-12-07 14:37:00
+    Price                               1.25
+    Customer ID                        14695
+    Name: 15654, dtype: object
+    ----------Does not match----------
+    StockCode                         90214S
+    Description    LETTER "S" BLING KEY RING
+    Quantity                              -6
+    InvoiceDate          2009-12-07 14:37:00
+    Price                               1.25
+    Customer ID                        14695
+    Name: 15655, dtype: object
+    ----------Does not match----------
+    StockCode                         90214C
+    Description    LETTER "C" BLING KEY RING
+    Quantity                              -6
+    InvoiceDate          2009-12-07 14:37:00
+    Price                               1.25
+    Customer ID                        14695
+    Name: 15656, dtype: object
+    ----------Does not match----------
+    StockCode                         90214A
+    Description    LETTER "A" BLING KEY RING
+    Quantity                              -6
+    InvoiceDate          2009-12-07 14:37:00
+    Price                               1.25
+    Customer ID                        14695
+    Name: 15657, dtype: object
+    ----------Does not match----------
+    StockCode                         90214L
+    Description    LETTER "L" BLING KEY RING
+    Quantity                              -6
+    InvoiceDate          2009-12-07 14:37:00
+    Price                               1.25
+    Customer ID                        14695
+
+To check that the cancellation is matched with a past order, i looked at specifically customer ID == 14695 where the stockCode ends with the letter "L".
+
+    df.loc[(df["Customer ID"]==14695) & (df["StockCode"]=="90214L") ]
+|  | Invoice  | StockCode | Description | Quantity | InvoiceDate | Price | Customer ID | Country | order_cancelled |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 15658 | C490700 | 90214L | LETTER "L" BLING KEY RING | -6 | 2009-12-07 14:37:00 | 1.25 | 14695.0 | United Kingdom | 1 |
+
+As you can see, there is only one row that is outputted, which meant that the cancellation was not matched. We need to take into account this problem.
+
+5) Discounted Orders
+Some of the negative quanity invoices are discounted. We can see this in the description == "Discount".
+
+    df_discount=df[df["Description"]=="Discount"]
+    df_discount[0]
+|  | Invoice  | StockCode | Description | Quantity | InvoiceDate | Price | Customer ID | Country | order_cancelled |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 735 | C489535 | D | Discount | -1 | 2009-12-01 12:11:00 | 9.00 | 15299.0 | United Kingdom | 1 |   
+    
+6) **Data cleaning for cancellation**
+
+Since some of the cancellations are not matched, we are going to do datacleaning specifically to only those that matched. It is also important to note that for some of the orders that are not matched, it is most likely due to the fact that the order is placed before 2009-12-01 which is the date that the dataset starts.
+
+To handle data cleaning, I will be having a function that checks for two cases:
+1. a cancel order exists without counterpart
+2. there's at least one counterpart with the exact same quantity
+
+        entry_to_remove: 16168 (2.03%)
+        doubtful_entry: 1942 (0.24%)
+        
+We will be dropping the cancellation orders with counterpart as it is justified. Since the doubtful entries (cancellation without counterpart) covers a small percentage (0.24%), we will also drop those entries too.
+
+Now we will check to see the number of entries that correspond to cancellations and that have not been deleted with the previous filter:
+
+    Number of entries not yet deleted: 115
+    
+******CONTINUE HERE*********
+
+7) Removal of outliers
+
+We determine the cut-off for identifying outliers as more than 3 standard deviations from the mean.
+
+    entry_to_remove: 56 (0.01%)
 
 ## **Customer Segmentation - Insights on results**
 Customer Segmentation is done using the RFM principle. RFM stands for Recency, Frequency and Monetary value respectively.
@@ -69,6 +177,7 @@ Here we will start segregating based on the percentile of the attribute. The att
 <insert graphs>
   
 ![image](https://user-images.githubusercontent.com/42713212/103103708-e7cff300-465d-11eb-8dd3-8c25e1a3c9fe.png)
+
 Source: Blast Analytics Marketing
 
 ![image](https://user-images.githubusercontent.com/42713212/103103505-780d3880-465c-11eb-9230-e4e71375c4ef.png)
