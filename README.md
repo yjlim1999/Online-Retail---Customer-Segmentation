@@ -16,7 +16,34 @@ The dataframe contains 8 attributes:
 * Country: Country name. Nominal. The name of the country where a customer resides.
 
 ## **Datacleaning**
-For this project, the data cleaning portion is quite interesting as I have not done data cleaning on an retail dataset before. Therefore, the approach that I used in data cleaning is quite different here.
+For this project, the data cleaning portion is quite interesting as I have not done data cleaning on an retail dataset before. Therefore, the approach that I used in data cleaning is quite different here than other projects that I have done.
+
+1) Checking for missing data
+2) Duplicate entries 
+3) **Negative Values**
+
+Surprisingly, quantity has a negative number.
+
+    negquantity = df[df['Quantity'] < 0]
+    negquantity.head(5)
+    
+
+|  | Invoice  | StockCode | Description | Quantity | InvoiceDate | Price | Customer ID | Country |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 178 | C489449 | 22087 | PAPER BUNTING WHITE LACE | -12 | 2009-12-01 10:33:00 | 2.95 | 16321.0 | Australia |
+| 179 | C489449 | 85206A | CREAM FELT EASTER EGG BASKET | -6 | 2009-12-01 10:33:00 | 1.65 | 16321.0 | Australia |
+| 180 | C489449 | 21895 | POTTING SHED SOW 'N' GROW SET | -4 | 2009-12-01 10:33:00 | 4.25 | 16321.0 | Australia |
+| 181 | C489449 | 21896 | POTTING SHED TWINE | -6 | 2009-12-01 10:33:00 | 4.25 | 16321.0 | Australia |
+| 182 | C489449 | 22083 | PAPER CHAIN KIT RETRO SPOT | -12 | 2009-12-01 10:33:00 | 2.95 | 16321.0 | Australia |
+
+We can observe that for negative quantity numbers, the invoice number contains the letter "C", which indicates a cancellation. Let's take alook closely at the cancelled  orders
+
+4) **Cancelled Orders**
+
+        Number of orders cancelled: 18390/797885 (2.30%) 
+        
+As you can see from the table above, we can see that the cancellations are made by the same person (Customer ID: C489449). I decide to see whether there are orders bought before from this customer with exactly the same attributes with exception of invoice number and invoiceDate. However, I realised that the previous orders for this particular customer may not be present in the dataset as the cancellation is made on 2009-12-01 which means that the order is most likely to be bought previously on a date earlier but the dataset only starts at 2009-12-01. The hypothesis proves to be the correct as the previous order is not found.
+
 
 ## **Customer Segmentation - Insights on results**
 Customer Segmentation is done using the RFM principle. RFM stands for Recency, Frequency and Monetary value respectively.
