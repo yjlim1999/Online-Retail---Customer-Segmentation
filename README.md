@@ -192,15 +192,23 @@ It seems like the sales made by good customers is increasing from 2010 to 2011 c
 
 ![image](https://user-images.githubusercontent.com/42713212/103103526-94a97080-465c-11eb-9866-4d17cad7fdb0.png)
 
-There seems to be a drop in 
+There seems to be a drop in average customer monthly sales from 2010 to 2011, especially in the decrease in sales for 10/2011 and 11/2011 when compared to 10/2010 and 11/2010.
 
 ![image](https://user-images.githubusercontent.com/42713212/103103532-9d9a4200-465c-11eb-9708-1d27a57cfcc6.png)
 
+The bad customer monthly sale dropped drastically at 12/2010. Since these are bad customers who are of low value, it may be a waste of resources for the marketing team to target the segment to increase in sales and it would be more efficient to target higher value customers.
+
 ![image](https://user-images.githubusercontent.com/42713212/103103537-a559e680-465c-11eb-87d4-8f93e68ef383.png)
+
+It seems like the sales made by best customers is increasing from 2010 to 2011 comparatively across all months, which is a good sign. The most noticable would be the increase in sales would be 9/2011, 10/2011 and 11/2011 compared to 9/2010, 10/2010 and 11/2010. This trend is not present for all the other customer segments. Working with the marketing team would be useful in determining the reason for this improvement in sales and this info could be use to further increase sales made by best customers for the following years. This is very important as these customers are of the highest value.
 
 ![image](https://user-images.githubusercontent.com/42713212/103103541-ad198b00-465c-11eb-862e-c1306380ef61.png)
 
+The loyal customer monthly sale dropped alittle from 2010 to 2011. It is most likely due to the poor marketing campaign targetted at the customer segment.
+
 ![image](https://user-images.githubusercontent.com/42713212/103103550-ba367a00-465c-11eb-822b-8c70e3bbd43c.png)
+
+It seems like the sales made by big spenders customers is increasing from 2010 to 2011 comparatively across all months, which is a good sign. The most noticable would be the increase in sales would be 9/2011, 10/2011 and 11/2011 compared to 9/2010, 10/2010 and 11/2010. This trend is not present for all the other customer segments. Working with the marketing team would be useful in determining the reason for this improvement in sales and this info could be use to further increase sales made by big spenders customers for the following years. 
 
 ![image](https://user-images.githubusercontent.com/42713212/103103557-c1f61e80-465c-11eb-835a-2afa47fc6532.png)
 
