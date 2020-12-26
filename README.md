@@ -113,6 +113,7 @@ Despite this, we can still verify the cancellations that are made later than 200
 To check that the cancellation is matched with a past order, i looked at specifically customer ID == 14695 where the stockCode ends with the letter "L".
 
     df.loc[(df["Customer ID"]==14695) & (df["StockCode"]=="90214L") ]
+    
 |  | Invoice  | StockCode | Description | Quantity | InvoiceDate | Price | Customer ID | Country | order_cancelled |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 15658 | C490700 | 90214L | LETTER "L" BLING KEY RING | -6 | 2009-12-07 14:37:00 | 1.25 | 14695.0 | United Kingdom | 1 |
@@ -124,6 +125,7 @@ Some of the negative quanity invoices are discounted. We can see this in the des
 
     df_discount=df[df["Description"]=="Discount"]
     df_discount[0]
+    
 |  | Invoice  | StockCode | Description | Quantity | InvoiceDate | Price | Customer ID | Country | order_cancelled |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 735 | C489535 | D | Discount | -1 | 2009-12-01 12:11:00 | 9.00 | 15299.0 | United Kingdom | 1 |   
@@ -141,17 +143,21 @@ To handle data cleaning, I will be having a function that checks for two cases:
         
 We will be dropping the cancellation orders with counterpart as it is justified. Since the doubtful entries (cancellation without counterpart) covers a small percentage (0.24%), we will also drop those entries too.
 
-Now we will check to see the number of entries that correspond to cancellations and that have not been deleted with the previous filter:
-
-    Number of entries not yet deleted: 115
-    
-******CONTINUE HERE*********
-
 7) Removal of outliers
 
 We determine the cut-off for identifying outliers as more than 3 standard deviations from the mean.
 
     entry_to_remove: 56 (0.01%)
+
+## **Interesting EDA**
+Below shows the top words that appear in the description.
+![newplot (2)](https://user-images.githubusercontent.com/42713212/103145619-851f4a00-4778-11eb-9cfd-c295082274d5.png)
+
+We are able to see that "set", "red", "bag", "heart" and "pink" are the most common words that appear in the description. However, a better approach will be to look at the top words that appear for respective months since some months have special holidays that may alter the consumer's spending patterns. Below show the top words that appear in the description for each month.
+
+![image](https://user-images.githubusercontent.com/42713212/103147272-cd496700-478e-11eb-8905-eb43d1cae897.png)
+
+As observed from the graphs, the top words changes as the months progressed. For example, in september, the word "christmas" suddenly appeared in the top 5 and rise to top 2 during october and november. It then dropped to 6th place in December. This is surprising as christmas is on the month of December and it contradicts the hypothesis that that sales for christmas related products will be the highest during the month. Therefore, the company can use this data to start promoting christmas related products in september since customers will start buying christmas products then. 
 
 ## **Customer Segmentation - Insights on results**
 Customer Segmentation is done using the RFM principle. RFM stands for Recency, Frequency and Monetary value respectively.
@@ -182,7 +188,11 @@ Source: Blast Analytics Marketing
 
 ![image](https://user-images.githubusercontent.com/42713212/103103505-780d3880-465c-11eb-9230-e4e71375c4ef.png)
 
+It seems like the sales made by good customers is increasing from 2010 to 2011 comparatively across all months, which is a good sign. The most noticable would be the increase in sales would be 9/2011, 10/2011 and 11/2011 compared to 9/2010, 10/2010 and 11/2010. This trend is not present for all the other customer segments. Working with the marketing team would be useful in determining the reason for this improvement in sales and this info could be use to further increase sales made by good customers for the following years.
+
 ![image](https://user-images.githubusercontent.com/42713212/103103526-94a97080-465c-11eb-9866-4d17cad7fdb0.png)
+
+There seems to be a drop in 
 
 ![image](https://user-images.githubusercontent.com/42713212/103103532-9d9a4200-465c-11eb-9708-1d27a57cfcc6.png)
 
