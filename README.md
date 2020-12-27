@@ -212,6 +212,22 @@ It seems like the sales made by big spenders customers is increasing from 2010 t
 
 ![image](https://user-images.githubusercontent.com/42713212/103103557-c1f61e80-465c-11eb-835a-2afa47fc6532.png)
 
+Similar to the bad customer graph, the number of sales for almost lost customers dropped sharply in 2011. These customers are valuable. This is because even though they have not purchase for some time, they purchase frequently and spends the most. Therefore, it is important to focus on increasing the number of sales back.
+
 ![image](https://user-images.githubusercontent.com/42713212/103103562-ca4e5980-465c-11eb-8de3-01dc1cea2d19.png)
 
+There is no data available for 2011 for this lost customer segment.
+
 ![image](https://user-images.githubusercontent.com/42713212/103103582-e9e58200-465c-11eb-867f-0e164e0bae6e.png)
+
+There is also no data available for 2011 for this lost cheap customer segment.
+
+## **Conclusion - Practical Implementations**
+
+Overall, based on the analysis made for the different customer segments, I think the company should focus on these 3 customer segments more:
+
+1. loyal customers: the monthly sales did not increase but instead dropped alittle for some months. Since these customers buy the most frequently, the dropped in monthly sales would most likely stem from poor marketing targetted at the customer segment. Improving the quality and quantity of marketing would most likely lead to high rewards.
+
+2. Big spenders
+
+3. Almost lost customers
